@@ -29,7 +29,7 @@ require.config({
 });
 
 // Main RequireJS action. Here we initialize The angular main app
-require(['angularrouter', 'appconfig', 'app/home'], requireMain);
+require(['angularrouter', 'appconfig'], requireMain);
 function requireMain() {
     angular.bootstrap(document,['app']);
 }

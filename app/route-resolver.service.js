@@ -8,8 +8,8 @@ define(['angular'], function (angular) {
         };
 
         this.routeConfig = function () {
-            var viewsDirectory = './js/app/views/',
-                controllersDirectory = './js/app/controllers/',
+            var viewsDirectory = './app/',
+                controllersDirectory = './app/',
 
                 setBaseDirectories = function (viewsDir, controllersDir) {
                     viewsDirectory = viewsDir;
@@ -35,20 +35,19 @@ define(['angular'], function (angular) {
 
             var resolve = function (baseName, path, controllerAs, secure) {
                     if (!path) path = '';
-
+                    if (!controllerAs) controllerAs = 'vm';
                     var routeDef = {};
                     var baseFileName = baseName.charAt(0).toLowerCase() + baseName.substr(1);
                     routeDef.templateUrl = routeConfig.getViewsDirectory() + path + baseFileName + '.html';
-                    routeDef.controller = baseName + 'Controller';
+                    routeDef.controller = baseName;
                     if (controllerAs) routeDef.controllerAs = controllerAs;
                     routeDef.secure = (secure) ? secure : false;
                     routeDef.resolve = {
                         load: ['$q', '$rootScope', function ($q, $rootScope) {
-                            var dependencies = [routeConfig.getControllersDirectory() + path + baseFileName + 'Controller.js'];
+                            var dependencies = [routeConfig.getControllersDirectory() + path + baseFileName + '.js'];
                             return resolveDependencies($q, $rootScope, dependencies);
                         }]
                     };
-
                     return routeDef;
                 },
 
@@ -56,7 +55,7 @@ define(['angular'], function (angular) {
                     var defer = $q.defer();
                     require(dependencies, function () {
                         defer.resolve();
-                        $rootScope.$apply()
+                        $rootScope.$apply();
                     });
 
                     return defer.promise;

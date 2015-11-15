@@ -3,13 +3,13 @@
  */
 'use strict';
 define(['angular', 'appconfig'], function (angular) {
-    angular.module('app').controller('home', homeCtrl);
-    homeCtrl.$inject = [];
 
-    //////
-    function homeCtrl() {
+    angular.module('app').register.controller('home', home);
+    home.$inject = [];
+
+    ////////////////////////////
+    function home() {
         var vm = this;
         vm.name = "of angular";
     }
-
 });
